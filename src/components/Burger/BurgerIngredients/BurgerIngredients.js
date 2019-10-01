@@ -19,7 +19,7 @@ class BurgerIngredients extends Component{
             );
             break;
         case('meat'):
-                ingredients=<div className={classes.Meats}> </div>;
+                ingredients=<div className={classes.Meat}> </div>;
                 break;
         case('cheese'):
                 ingredients=<div className={classes.Cheese}> </div>;
@@ -33,6 +33,7 @@ class BurgerIngredients extends Component{
         default: ingredients=null;
         
     }
+    return ingredients;
     
     }
 }
