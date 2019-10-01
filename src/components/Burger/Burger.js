@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './Burger.module.css';
 import BurgerIngredients from './BurgerIngredients/BurgerIngredients';
-import { arrayExpression } from '@babel/types';
 
 const burger = (props) => {
     let transformedIngredients = Object.keys(props.ingredients)
