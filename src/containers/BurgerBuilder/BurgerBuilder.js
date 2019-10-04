@@ -70,7 +70,11 @@ class BurgerBuilder extends Component{
         this.setState( { purchasing : false} )
     }
     purchaseContinueHandler = () => {
-        alert("You can continue");
+        alert("Your order has been placed!");
+        if(onclick="ok")
+    {
+        document.location.reload(true);
+    }
     }
     render() {
         const disabledInfo = {
