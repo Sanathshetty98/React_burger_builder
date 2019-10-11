@@ -4,12 +4,14 @@ import Button from '../../UI/Button/Button';
 import classes from './CheckOutSummary.module.css';
 
 const checkOutSummary = (props) => {
+    const price = +props.price;
     return(
         <div className={classes.CheckOutSummary}>
-            <h1>Hope it tastes good!!!</h1>
-            <div style={{ width: '100%', margin: 'auto'}}>
+            <h1> We hope it tastes good!!!</h1>
+            <div style={{ width: '100%', margin: 'auto',height:'300px'}}>
                 <Burger ingredients={props.ingredients}/>
             </div>
+            <h4>Total price: {price.toFixed(2)} </h4>
             <Button 
                 btnType = "Danger" 
                 clicked={props.checkoutCancel}>CANCEL</Button> 
