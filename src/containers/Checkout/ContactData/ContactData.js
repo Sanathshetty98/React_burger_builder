@@ -77,7 +77,7 @@ class ContactData extends Component{
                                 { value: 'Cheapest', displayValue: 'Cheapest' }
                         ]
                         },
-                        value: '',
+                        value: 'Fastest',
                         validation : {
                             required : true
                         },
@@ -87,7 +87,7 @@ class ContactData extends Component{
         loading: false
     }
 
-    checkValidaity(value, rules){
+    checkValidity(value, rules){
         let isValid = false;
         if(rules.required){
             isValid = value.trim() !== '' && isValid;
@@ -106,10 +106,10 @@ class ContactData extends Component{
         /*
         alert("Your order has been placed!");
         if(onclick="ok")
-    {
-        document.location.reload(true);
-    }
-     */
+        {
+            document.location.reload(true);
+        }
+        */
         let formData = {};
         for(let formDataIdentifier in this.state.orderForm){
             formData[formDataIdentifier]= this.state.orderForm[formDataIdentifier].value;
@@ -123,10 +123,10 @@ class ContactData extends Component{
         axios.post('/orders.json',order)
           .then(response => {
             this.setState( { loading: false} )
-            this.props.history.push('/'); })
+            this.props.history.push('/');
+            })
           .catch(error => 
             this.setState( { loading: false} ));
-           
     }
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
@@ -136,7 +136,7 @@ class ContactData extends Component{
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidaity(updatedFormElement.value, updatedFormElement.validation)
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
         updatedOrderForm[inputIdentifier]= updatedFormElement;
         console.log(updatedFormElement);
         this.setState( { orderForm: updatedOrderForm} )
