@@ -11,7 +11,8 @@ class ContactData extends Component{
                         elementType : 'input',
                         elementConfig : {
                             type: 'text',
-                            placeholder: 'Your Name'
+                            placeholder: 'Your Name',
+                            required: true
                         },
                         value: '',
                         validation : {
@@ -23,7 +24,8 @@ class ContactData extends Component{
                         elementType : 'input',
                         elementConfig : {
                             type: 'text',
-                            placeholder: 'Street'
+                            placeholder: 'Street',
+                            required : true
                         },
                         value: '',
                         validation : {
@@ -35,7 +37,8 @@ class ContactData extends Component{
                         elementType : 'input',
                         elementConfig : {
                             type: 'text',
-                            placeholder: 'ZIP Code'
+                            placeholder: 'ZIP Code',
+                            required : true
                         },
                         value: '',
                         validation : {
@@ -49,7 +52,8 @@ class ContactData extends Component{
                         elementType : 'input',
                         elementConfig : {
                             type: 'text',
-                            placeholder: 'Country'
+                            placeholder: 'Country',
+                            required : true
                         },
                         value: '',
                         validation : {
@@ -61,7 +65,8 @@ class ContactData extends Component{
                         elementType : 'input',
                         elementConfig : {
                             type: 'email',
-                            placeholder: 'Your E-Mail'
+                            placeholder: 'Your E-Mail',
+                            required : true
                         },
                         value: '',
                         validation : {

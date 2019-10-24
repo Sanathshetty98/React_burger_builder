@@ -1,0 +1,58 @@
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Hello from './Hello';
+import './style.css';
+import Chart from "chart.js";
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: 'React'
+    };
+  }
+   chartRef = React.createRef();
+    
+    componentDidMount() {
+        const myChartRef = this.chartRef.current.getContext("2d");
+        
+        new Chart(myChartRef, {
+            type: "pie",
+            data: {
+                //Bring in data
+                labels: ["Jan", "Feb", "March"],
+                datasets: [
+                    {
+                        backgroundColor: [
+                          "#2ecc71",
+                          "#3498db",
+                          "#95a5a6",
+                          "#9b59b6",
+                          "#f1c40f",
+                          "#e74c3c",
+                          "#34495e"
+                        ],
+                        label: "Sales",
+                        data: [86, 67, 91],
+                    }
+                ]
+            },
+            options: {
+            legend: {
+              display: false
+              }
+            }
+        });
+    }
+    render() {
+        return (
+            <div>
+                <canvas
+                    id="myChart"
+                    ref={this.chartRef}
+                />
+            </div>
+        )
+    }
+}
+
+render(<App />, document.getElementById('root'));
