@@ -8,8 +8,6 @@ class Orders extends Component{
             loading: true
         }
    
-     
-
      componentDidMount(){
          axios.get('/orders.json')   
                .then(res =>{

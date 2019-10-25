@@ -31,7 +31,7 @@ class PieCharts extends Component{
             //   console.log(countc, countf)
             // if(type === 'fast'){
             //     return countf;
-            // }[
+            // }
             
               
             // else if(type === 'cheap'){
@@ -44,9 +44,6 @@ class PieCharts extends Component{
             //                 name : order.orderData.country,
             //                 count : 1
             //             }
-                        
-
-
             //     })
             // }
         // this.setState({countc : calculateDelivery('cheap')});
