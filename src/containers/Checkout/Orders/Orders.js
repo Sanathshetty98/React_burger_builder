@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import Order from  '../../../components/Order/Order';
+//import Order from  '../../../components/Order/Order';
 import axios from '../../../axios-orders';
 import PieChart from './PieChart';
 class Orders extends Component{
@@ -8,7 +8,7 @@ class Orders extends Component{
             loading: true
         }
    
-     componentDidMount(){
+     /*componentDidMount(){
          axios.get('/orders.json')   
                .then(res =>{
                      const fetch = [];
@@ -25,10 +25,10 @@ class Orders extends Component{
                 console.log(error);
                
                })
-     }
+     }*/
      
     render(){
-        console.log(this.state.orders);
+        //console.log(this.state.orders);
         return(
             <div>
                 {/* {this.state.orders.map( order => (
@@ -37,8 +37,7 @@ class Orders extends Component{
                       ingredients={order.ingredients}
                       price={+order.price}/>
                 ))} */}
-                <PieChart  order={this.state.orders}/>
-                
+                <PieChart/>
                 
             </div>
         );

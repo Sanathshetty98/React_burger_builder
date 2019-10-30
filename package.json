@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aggregate_groupby_js": "^1.0.11",
     "axios": "^0.19.0",
+    "chart.js": "^2.9.1",
+    "jquery": "^3.4.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-minimal-pie-chart": "^5.0.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2"
+    "react-scripts": "3.1.2",
+    "underscore": "^1.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
