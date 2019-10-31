@@ -129,7 +129,7 @@ class PieCharts extends Component{
               console.log(this.state.orders);
               if(this.state.data1 !== null){ 
                 console.log(this.state.data1);
-                new Chart(myChartRef1, {
+                var chart1 = new Chart(myChartRef1, {
                     type: "pie",
                     data: {
                         //Bring in data
@@ -145,7 +145,7 @@ class PieCharts extends Component{
                                   "#e74c3c",
                                   "#34495e"
                                 ],
-                                label: "Sales",
+                                label: this.state.data1.map((ele) => ele.title),//"Sales",
                                 data: this.state.data1.map((ele) => ele.value),
                             }
                         ]
@@ -153,13 +153,25 @@ class PieCharts extends Component{
                     options: {
                     legend: {
                       display: true
-                      }
+                      },
+                    // 'onClick' : function (evt, item) {
+                    // console.log ('legend onClick', evt);
+                    // console.log('legd item', item);
+                     onClick : function(e){
+                     var activePoints = chart1.getElementsAtEvent(e);
+                     //console.log(activePoints);
+                     if(activePoints.length > 0){
+                     var selectedIndex = activePoints[0]._index;
+                     console.log(this.data.datasets[0].data._chartjs.listeners[0]._config.label[selectedIndex]);
+                     }
+                   
+                    }
                     }
                 });
                 }
                 if(this.state.data2 !== null){ 
                     console.log(this.state.data2);
-                    new Chart(myChartRef2, {
+                    var chart2 = new Chart(myChartRef2, {
                         type: "pie",
                         data: {
                             //Bring in data
@@ -175,7 +187,7 @@ class PieCharts extends Component{
                                       "#e74c3c",
                                       "#34495e"
                                     ],
-                                    label: "Sales",
+                                    label: this.state.data2.map((ele) => ele.title),//"Sales",
                                     data: this.state.data2.map((ele) => ele.value),
                                 }
                             ]
@@ -183,7 +195,16 @@ class PieCharts extends Component{
                         options: {
                         legend: {
                           display: true
-                          }
+                          },
+                          onClick : function(e){
+                            var activePoints = chart2.getElementsAtEvent(e);
+                            //console.log(activePoints);
+                            if(activePoints.length > 0){
+                                var selectedIndex = activePoints[0]._index;
+                                console.log(this.data.datasets[0].data._chartjs.listeners[0]._config.label[selectedIndex]);
+                            }
+                            
+                           }
                         }
                     });
                 }
@@ -195,13 +216,7 @@ class PieCharts extends Component{
 
         const myChartRef1 = this.chartRef1.current.getContext("2d");
             
-                    // 'onClick' : function(e){
-                    //     var activePoints = myChartRef1.getElementsAtEvent(e);
-                    //     var selectedIndex = activePoints[0]._index;
-                    //     alert(this.data.datasets[0].data[selectedIndex]);
-                    
-                    
-                    //}
+                     
            
          const myChartRef2 = this.chartRef2.current.getContext("2d");
          
