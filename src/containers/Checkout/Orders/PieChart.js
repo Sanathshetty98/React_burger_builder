@@ -53,14 +53,34 @@ class PieCharts extends Component{
         return totalOrders;
     }
     calcCountry = () =>{
-        var data = this.state.orders.map( order => {
-            var data;
-            data = {title: order.orderData.country, value: 1}
-            return data;
-          })
-          data.sort((a,b) => a.title.localeCompare(b.title));
-          console.log(data);
-          return data;
+        // var data = this.state.orders.map( order => {
+        //     var data;
+        //     data = {title: order.orderData.country, value: 1}
+        //     return data;
+        //   })
+        //   data.sort((a,b) => a.title.localeCompare(b.title));
+        //   console.log(data);
+        //   return data;
+        var data = this.sortFn('orderData.country', this.state.orders), count=1, activeString='', totalOrders=[];
+        data = data.map( (order, i) => {
+        let curString = order.orderData.country;
+        if(activeString !== curString) {
+            if(i !== 0) {
+                totalOrders.push({title: activeString, value: count})
+            }
+        count = 1;
+            activeString = curString;
+        } else {
+            count ++;
+        }
+        if(i === data.length - 1) {
+            totalOrders.push({title: activeString, value: count})
+        }
+        })
+        console.log(totalOrders);
+        this.setState({data2: totalOrders})
+        return totalOrders;
+
        }
        //data1 = calculateDelivery();
         //console.log(data1);
@@ -95,18 +115,20 @@ class PieCharts extends Component{
                     });
                 }
               this.setState( {orders: fetch} );
+
+              let data1 = this.calculateDelivery();
+              console.log(data1);
+              this.setState({data1 : data1});
+              console.log(this.state.data1);
+
+              let data2 = this.calcCountry();
+              console.log(data2);
+              this.setState({data2 : data2});
+              console.log(this.state.data2);
+
               console.log(this.state.orders);
-            })
-            .catch( error => {
-            this.setState( {loading: false} )
-            console.log(error);
-            })
-        
-        console.log(this.state.orders);
-        let data1 = this.calculateDelivery();
-        console.log(data1);
-        const myChartRef1 = this.chartRef1.current.getContext("2d");
-            if(this.state.data1 !== undefined){
+              if(this.state.data1 !== null){ 
+                console.log(this.state.data1);
                 new Chart(myChartRef1, {
                     type: "pie",
                     data: {
@@ -124,7 +146,7 @@ class PieCharts extends Component{
                                   "#34495e"
                                 ],
                                 label: "Sales",
-                                data: [86, 67, 91],
+                                data: this.state.data1.map((ele) => ele.value),
                             }
                         ]
                     },
@@ -132,47 +154,57 @@ class PieCharts extends Component{
                     legend: {
                       display: true
                       }
-                    },
-                    'onClick' : function(e){
-                        var activePoints = myChartRef1.getElementsAtEvent(e);
-                        var selectedIndex = activePoints[0]._index;
-                        alert(this.data.datasets[0].data[selectedIndex]);
-                    
-                    
                     }
                 });
-           
-            }
+                }
+                if(this.state.data2 !== null){ 
+                    console.log(this.state.data2);
+                    new Chart(myChartRef2, {
+                        type: "pie",
+                        data: {
+                            //Bring in data
+                            labels:this.state.data2.map((ele) => ele.title),
+                            datasets: [
+                                {
+                                   backgroundColor: [
+                                      "#2ecc71",
+                                      "#3498db",
+                                      "#95a5a6",
+                                      "#9b59b6",
+                                      "#f1c40f",
+                                      "#e74c3c",
+                                      "#34495e"
+                                    ],
+                                    label: "Sales",
+                                    data: this.state.data2.map((ele) => ele.value),
+                                }
+                            ]
+                        },
+                        options: {
+                        legend: {
+                          display: true
+                          }
+                        }
+                    });
+                }
+            })
+            .catch( error => {
+            this.setState( {loading: false} )
+            console.log(error);
+            })
 
+        const myChartRef1 = this.chartRef1.current.getContext("2d");
+            
+                    // 'onClick' : function(e){
+                    //     var activePoints = myChartRef1.getElementsAtEvent(e);
+                    //     var selectedIndex = activePoints[0]._index;
+                    //     alert(this.data.datasets[0].data[selectedIndex]);
+                    
+                    
+                    //}
+           
          const myChartRef2 = this.chartRef2.current.getContext("2d");
-        
-         new Chart(myChartRef2, {
-             type: "pie",
-             data: {
-                 //Bring in data
-                labels: ["Jan", "Feb", "March"],
-                 datasets: [
-                     {
-                         backgroundColor: [
-                           "#2ecc71",
-                           "#3498db",
-                           "#95a5a6",
-                          "#9b59b6",
-                           "#f1c40f",
-                           "#e74c3c",
-                           "#34495e"
-                         ],
-                         label: "Sales",
-                        data: [86, 67, 91],
-                     }
-                 ]
-             },
-             options: {
-             legend: {
-               display: true
-               }
-             },
-         });
+         
      }
     render(){
         
