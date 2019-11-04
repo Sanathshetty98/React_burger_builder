@@ -3,16 +3,23 @@ import React, {Component} from 'react';
 import classes from './PieChart.module.css';
 import Chart from "chart.js";
 import axios from '../../../axios-orders';
+import Modal from '../../../components/UI/Modal/Modal2';
+import ChartData from './chartData';
 class PieCharts extends Component{
    state = {
        orders : [],
        data1 : [],
-       data2 : []
+       data2 : [],
+       result : [],
+       clicked : false
+
    }
+   purchaseCancelHandler = () =>{
+        this.setState( { clicked : false} )
+    }
     sortFn = (prop, arr) => {
     prop = prop.split('.');
     var len = prop.length;
-    
     arr.sort(function (a, b) {
         var i = 0;
         while( i < len ) {
@@ -52,7 +59,10 @@ class PieCharts extends Component{
         this.setState({data1: totalOrders})
         return totalOrders;
     }
-    calcCountry = () =>{
+    orderData = () => {
+        //code
+    }
+    calcCity = () =>{
         // var data = this.state.orders.map( order => {
         //     var data;
         //     data = {title: order.orderData.country, value: 1}
@@ -61,9 +71,9 @@ class PieCharts extends Component{
         //   data.sort((a,b) => a.title.localeCompare(b.title));
         //   console.log(data);
         //   return data;
-        var data = this.sortFn('orderData.country', this.state.orders), count=1, activeString='', totalOrders=[];
+        var data = this.sortFn('orderData.city', this.state.orders), count=1, activeString='', totalOrders=[];
         data = data.map( (order, i) => {
-        let curString = order.orderData.country;
+        let curString = order.orderData.city;
         if(activeString !== curString) {
             if(i !== 0) {
                 totalOrders.push({title: activeString, value: count})
@@ -82,26 +92,29 @@ class PieCharts extends Component{
         return totalOrders;
 
        }
-       //data1 = calculateDelivery();
-        //console.log(data1);
-        
-        //console.log(this.state.data1);
-        //data2 = calcCountry();
-        //dataObject1 = eval(data1);
-         //console.log(dataObject1);
-         //var dataObject2 = eval("("+data2+")");
-        //  if(dataObject1 === undefined){
-        //     var result1 = dataObject1.reduce((res, obj) => {
-        //         if (!(obj.title in res)){
-        //              res.__array.push(res[obj.title] = obj);
-        //           }
-        //            else {
-        //                res[obj.title].value += obj.value;
-        //             }
-        //              return res;
-        //          })
-        //  }
-        //  console.log(result1);
+                                //data1 = calculateDelivery();
+                                    //console.log(data1);
+                                    
+                                    //console.log(this.state.data1);
+                                    //data2 = calcCity();
+                                    //dataObject1 = eval(data1);
+                                    //console.log(dataObject1);
+                                    //var dataObject2 = eval("("+data2+")");
+                                    //  if(dataObject1 === undefined){
+                                    //     var result1 = dataObject1.reduce((res, obj) => {
+                                    //         if (!(obj.title in res)){
+                                    //              res.__array.push(res[obj.title] = obj);
+                                    //           }
+                                    //            else {
+                                    //                res[obj.title].value += obj.value;
+                                    //             }
+                                    //              return res;
+                                    //          })
+                                    //  }
+                                    //  console.log(result1);
+    orderData = (label) => {
+        console.log(label);
+    }
     chartRef1 = React.createRef();
     chartRef2 = React.createRef();
      componentDidMount() {
@@ -121,7 +134,7 @@ class PieCharts extends Component{
               this.setState({data1 : data1});
               console.log(this.state.data1);
 
-              let data2 = this.calcCountry();
+              let data2 = this.calcCity();
               console.log(data2);
               this.setState({data2 : data2});
               console.log(this.state.data2);
@@ -129,6 +142,9 @@ class PieCharts extends Component{
               console.log(this.state.orders);
               if(this.state.data1 !== null){ 
                 console.log(this.state.data1);
+
+                let self = this;
+
                 var chart1 = new Chart(myChartRef1, {
                     type: "pie",
                     data: {
@@ -154,6 +170,10 @@ class PieCharts extends Component{
                     legend: {
                       display: true
                       },
+                      title: {
+                        display: true,
+                        text: ' Order Statistics based on Delivery Method '
+                       },
                     // 'onClick' : function (evt, item) {
                     // console.log ('legend onClick', evt);
                     // console.log('legd item', item);
@@ -162,15 +182,25 @@ class PieCharts extends Component{
                      //console.log(activePoints);
                      if(activePoints.length > 0){
                      var selectedIndex = activePoints[0]._index;
-                     console.log(this.data.datasets[0].data._chartjs.listeners[0]._config.label[selectedIndex]);
+                     let label = this.data.datasets[0].data._chartjs.listeners[0]._config.label[selectedIndex];
+                     console.log(label);
+                     const result = self.state.orders.filter(word => word.orderData.deliveryMethod === label );
+                     console.log(result);
+                     self.setState({result: result, clicked: true});
+                     console.log(self.state.result);
+                     //this.orderData();
+                     //this.setState({label: label});
+                     //console.log(this.state.label);
                      }
-                   
-                    }
+                     
+                      }
+                      
                     }
                 });
                 }
                 if(this.state.data2 !== null){ 
                     console.log(this.state.data2);
+                    let self = this;
                     var chart2 = new Chart(myChartRef2, {
                         type: "pie",
                         data: {
@@ -196,16 +226,27 @@ class PieCharts extends Component{
                         legend: {
                           display: true
                           },
+                          title: {
+                            display: true,
+                            text: ' City - Wise Order Statistics '
+                            },
                           onClick : function(e){
                             var activePoints = chart2.getElementsAtEvent(e);
                             //console.log(activePoints);
                             if(activePoints.length > 0){
                                 var selectedIndex = activePoints[0]._index;
-                                console.log(this.data.datasets[0].data._chartjs.listeners[0]._config.label[selectedIndex]);
+                                let label = this.data.datasets[0].data._chartjs.listeners[0]._config.label[selectedIndex];
+                                console.log(label);
+                                const result = self.state.orders.filter(word => word.orderData.city === label );
+                                console.log(result);
+                                self.setState({result: result, clicked: true});
+                                console.log(self.state.result);
                             }
                             
                            }
-                        }
+                           
+                        
+                      }
                     });
                 }
             })
@@ -244,7 +285,7 @@ class PieCharts extends Component{
             //     return countc;  
             // }
 
-            // var calcCountry = () => {
+            // var calcCity = () => {
             //    this.props.order.map( order => {
             //             obj = {
             //                 name : order.orderData.country,
@@ -256,8 +297,8 @@ class PieCharts extends Component{
         // this.setState({countf : calculateDelivery('fast')});
         
 
-    //    const {countf, countc  } = this.state;
-    //    console.log(countc, countf)
+        //  const {countf, countc  } = this.state;
+        //    console.log(countc, countf)
         // var countf = calculateDelivery('fast');
         // var countc  = calculateDelivery('cheap');
         // debugger;
@@ -272,9 +313,18 @@ class PieCharts extends Component{
         //       }
         //      return res;
         //   })
+        let result = null;
+        if( this.state.result.length >0){
+            result = <ChartData data={this.state.result} />;
+        }
+
         if(this.state.data1 !== null){
-            return (
+            return (  
                 <div>
+                    <Modal show = {this.state.clicked}
+                           modalClosed={this.purchaseCancelHandler}>
+                        {result}
+                    </Modal>
                 <div className={classes.PieChart}>
                      {/* <PieChart  
                         data={data1}
@@ -294,7 +344,7 @@ class PieCharts extends Component{
                             ref={this.chartRef2}
                             data1= {this.data1}
                         />
-                     <p>Country Orders Statistics</p>
+                     <p>City - Wise Order Statistics</p>
                 </div>
                 </div>
             );

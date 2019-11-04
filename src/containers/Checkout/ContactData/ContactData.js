@@ -48,11 +48,11 @@ class ContactData extends Component{
                         },
                         valid: false
                     },
-                    country: {
+                    city: {
                         elementType : 'input',
                         elementConfig : {
                             type: 'text',
-                            placeholder: 'Country',
+                            placeholder: 'City',
                             required : true
                         },
                         value: '',
@@ -119,6 +119,20 @@ class ContactData extends Component{
         for(let formDataIdentifier in this.state.orderForm){
             formData[formDataIdentifier]= this.state.orderForm[formDataIdentifier].value;
         }
+        let yt =Date();
+        yt = yt.toString();
+        yt = yt.split(' G');
+        formData['orderDate'] = yt[0];
+        let a;
+        console.log(this.state.orderForm['deliveryMethod'].value);
+        if(this.state.orderForm['deliveryMethod'].value === 'Cheapest' ){
+            a = 20 + Math.random() *30;
+        }
+        else{
+            a = 15 + Math.random() *16;
+        }
+        a = Math.round(a);
+        formData['deliveryTime'] = a + ' minutes';
         this.setState( {loading: true} );
         const order = {
             ingredients: this.props.ingredients,
