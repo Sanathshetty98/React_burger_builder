@@ -5,13 +5,15 @@ import Chart from "chart.js";
 import axios from '../../../axios-orders';
 import Modal from '../../../components/UI/Modal/Modal2';
 import ChartData from './chartData';
+//import Spinner from '../../../components/UI/Spinner/Spinner';
 class PieCharts extends Component{
    state = {
        orders : [],
        data1 : [],
        data2 : [],
        result : [],
-       clicked : false
+       clicked : false,
+       loading : true
 
    }
    purchaseCancelHandler = () =>{
@@ -143,6 +145,7 @@ class PieCharts extends Component{
               if(this.state.data1 !== null){ 
                 console.log(this.state.data1);
 
+                this.setState({loading : false});
                 let self = this;
 
                 var chart1 = new Chart(myChartRef1, {
@@ -153,13 +156,13 @@ class PieCharts extends Component{
                         datasets: [
                             {
                                backgroundColor: [
-                                  "#2ecc71",
-                                  "#3498db",
-                                  "#95a5a6",
-                                  "#9b59b6",
-                                  "#f1c40f",
-                                  "#e74c3c",
-                                  "#34495e"
+                                    "#2ecc71",
+                                    "#3498db",
+                                    "#95a5a6",
+                                    "#e74c3c",
+                                    "#9b59b6",
+                                    "#f1c40f",
+                                    "#34495e"
                                 ],
                                 label: this.state.data1.map((ele) => ele.title),//"Sales",
                                 data: this.state.data1.map((ele) => ele.value),
@@ -212,10 +215,11 @@ class PieCharts extends Component{
                                       "#2ecc71",
                                       "#3498db",
                                       "#95a5a6",
-                                      "#9b59b6",
                                       "#f1c40f",
                                       "#e74c3c",
-                                      "#34495e"
+                                      "#34495e",
+                                      "#9b59b6"
+                                      
                                     ],
                                     label: this.state.data2.map((ele) => ele.title),//"Sales",
                                     data: this.state.data2.map((ele) => ele.value),
@@ -313,6 +317,24 @@ class PieCharts extends Component{
         //       }
         //      return res;
         //   })
+
+        // let chart1 = <Spinner />;
+        // let chart2 = <Spinner />;
+        // if(!this.state.loading){
+        //     chart1 = (
+        //         <canvas
+        //             id="myChart"
+        //             ref={this.chartRef1}
+        //         />
+        //     );
+        //     chart2 = (
+        //         <canvas
+        //             id="myChart"
+        //             ref={this.chartRef2}
+        //             data1= {this.data1}
+        //         />
+        //     );
+        // }
         let result = null;
         if( this.state.result.length >0){
             result = <ChartData data={this.state.result} />;
@@ -333,7 +355,7 @@ class PieCharts extends Component{
                             id="myChart"
                             ref={this.chartRef1}
                         />
-                     <p>Delivery Method Statistics</p>
+                     <p> Order Statistics based on Delivery Method </p>
                 </div>   
                 <div className={classes.PieChart}>
                      {/* <PieChart   
