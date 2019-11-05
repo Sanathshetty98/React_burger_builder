@@ -14,7 +14,6 @@ class PieCharts extends Component{
        result : [],
        clicked : false,
        loading : true
-
    }
    purchaseCancelHandler = () =>{
         this.setState( { clicked : false} )
