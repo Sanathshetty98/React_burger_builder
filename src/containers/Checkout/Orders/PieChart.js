@@ -5,7 +5,7 @@ import Chart from "chart.js";
 import axios from '../../../axios-orders';
 import Modal from '../../../components/UI/Modal/Modal2';
 import ChartData from './chartData';
-//import Spinner from '../../../components/UI/Spinner/Spinner';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 class PieCharts extends Component{
    state = {
        orders : [],
@@ -147,6 +147,8 @@ class PieCharts extends Component{
                 this.setState({loading : false});
                 let self = this;
 
+                const myChartRef1 = this.chartRef1.current.getContext("2d");
+
                 var chart1 = new Chart(myChartRef1, {
                     type: "pie",
                     data: {
@@ -200,6 +202,8 @@ class PieCharts extends Component{
                     }
                 });
                 }
+                const myChartRef2 = this.chartRef2.current.getContext("2d");
+                
                 if(this.state.data2 !== null){ 
                     console.log(this.state.data2);
                     let self = this;
@@ -258,11 +262,9 @@ class PieCharts extends Component{
             console.log(error);
             })
 
-        const myChartRef1 = this.chartRef1.current.getContext("2d");
-            
-                     
-           
-         const myChartRef2 = this.chartRef2.current.getContext("2d");
+        //const myChartRef1 = this.chartRef1.current.getContext("2d");
+
+        //const myChartRef2 = this.chartRef2.current.getContext("2d");
          
      }
     render(){
@@ -317,23 +319,22 @@ class PieCharts extends Component{
         //      return res;
         //   })
 
-        // let chart1 = <Spinner />;
-        // let chart2 = <Spinner />;
-        // if(!this.state.loading){
-        //     chart1 = (
-        //         <canvas
-        //             id="myChart"
-        //             ref={this.chartRef1}
-        //         />
-        //     );
-        //     chart2 = (
-        //         <canvas
-        //             id="myChart"
-        //             ref={this.chartRef2}
-        //             data1= {this.data1}
-        //         />
-        //     );
-        // }
+        let chart1 = <Spinner />;
+        let chart2 = <Spinner />;
+        if(!this.state.loading){
+            chart1 = (
+                <canvas
+                    id="myChart"
+                    ref={this.chartRef1}
+                />
+            );
+            chart2 = (
+                <canvas
+                    id="myChart"
+                    ref={this.chartRef2}
+                />
+            );
+        }
         let result = null;
         if( this.state.result.length >0){
             result = <ChartData data={this.state.result} />;
@@ -350,21 +351,23 @@ class PieCharts extends Component{
                      {/* <PieChart  
                         data={data1}
                         />  */}
-                        <canvas
+                        {/* <canvas
                             id="myChart"
                             ref={this.chartRef1}
-                        />
+                        /> */}
+                        {chart1}
                      <p> Order Statistics based on Delivery Method </p>
                 </div>   
                 <div className={classes.PieChart}>
                      {/* <PieChart   
                         data={data2}
                         /> */}
-                        <canvas
+                        {/* <canvas
                             id="myChart"
                             ref={this.chartRef2}
                             data1= {this.data1}
-                        />
+                        /> */}
+                        {chart2}
                      <p>City - Wise Order Statistics</p>
                 </div>
                 </div>
