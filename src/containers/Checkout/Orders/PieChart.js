@@ -16,7 +16,7 @@ class PieCharts extends Component{
        loading : true
    }
    purchaseCancelHandler = () =>{
-        this.setState( { clicked : false} )
+        this.setState( { clicked : false} );
     }
     sortFn = (prop, arr) => {
     prop = prop.split('.');
@@ -251,8 +251,7 @@ class PieCharts extends Component{
                             }
                             
                            }
-                           
-                        
+                          
                       }
                     });
                 }
@@ -344,7 +343,7 @@ class PieCharts extends Component{
             return (  
                 <div>
                     <Modal show = {this.state.clicked}
-                           modalClosed={this.purchaseCancelHandler}>
+                         modalClosed={this.purchaseCancelHandler}>
                         {result}
                     </Modal>
                 <div className={classes.PieChart}>
