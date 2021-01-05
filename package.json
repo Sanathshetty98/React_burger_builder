@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "aggregate_groupby_js": "^1.0.11",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.1",
     "jquery": "^3.4.1",
     "prop-types": "^15.7.2",
